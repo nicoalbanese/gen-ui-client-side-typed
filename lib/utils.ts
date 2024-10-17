@@ -38,3 +38,4 @@ export const getTypedToolInvocations = <TTools extends Record<string, unknown>>(
 
 export type ToolResults<TTool extends { execute: (...args: any) => any }> =
   Awaited<ReturnType<TTool["execute"]>>;
+export type TypedToolInvocation = ReturnType<typeof getTypedToolInvocations>;
