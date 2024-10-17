@@ -1,7 +1,7 @@
 import { ToolInvocation } from "ai";
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
-export const getTypeSafeTools = <TTools extends Record<string, unknown>>(
+export const getTypedToolInvocations = <TTools extends Record<string, unknown>>(
   toolInvocation: ToolInvocation,
 ) => {
   type ExecuteArgs<T> = T extends {

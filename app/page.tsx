@@ -3,7 +3,7 @@
 import { useChat } from "ai/react";
 import { Weather } from "@/components/weather";
 import { type tools } from "@/ai/tools";
-import { getTypeSafeTools } from "@/lib/utils";
+import { getTypedToolInvocations } from "@/lib/utils";
 import { Stock } from "@/components/stock";
 
 export default function Page() {
@@ -19,7 +19,7 @@ export default function Page() {
           <div>
             {message.toolInvocations?.map((toolInvocation) => {
               const typedToolInvocation =
-                getTypeSafeTools<typeof tools>(toolInvocation);
+                getTypedToolInvocations<typeof tools>(toolInvocation);
               const { toolName, toolCallId, state } = typedToolInvocation;
 
               if (state === "result") {
