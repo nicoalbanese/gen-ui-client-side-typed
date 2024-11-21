@@ -2,9 +2,9 @@
 
 import { useChat } from "ai/react";
 import { Weather } from "@/components/weather";
-import { type tools } from "@/ai/tools";
+import { tools } from "@/ai/tools";
 import { Stock } from "@/components/stock";
-import { GenUI } from "@/lib/gen-ui";
+import { GenUI } from "@/lib/gen-ui-component";
 
 export default function Page() {
   const { messages, input, setInput, handleSubmit } = useChat();
@@ -15,14 +15,14 @@ export default function Page() {
         <div key={message.id}>
           <div>{message.role}</div>
           <div>{message.content}</div>
-          {GenUI<typeof tools>({
-            toolInvocations: message.toolInvocations,
-            components: {
-              displayWeather: Weather,
+          <GenUI
+            toolInvocations={message.toolInvocations}
+            components={{
               getStockPrice: Stock,
-            },
-            sendMessage: () => {},
-          })}
+              displayWeather: Weather,
+            }}
+            tools={tools}
+          />
         </div>
       ))}
 
