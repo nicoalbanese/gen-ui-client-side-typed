@@ -20,6 +20,7 @@ export function GenUI<
   toolInvocations?: ToolInvocation[];
   components: ComponentsMap<TTools>;
   tools: TTools;
+// @ts-expect-error JSX not found
 }): JSX.Element | null {
   if (!toolInvocations) {
     return null;
