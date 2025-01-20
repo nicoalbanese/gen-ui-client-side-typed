@@ -1,8 +1,9 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+
 import { ToolInvocation } from "ai";
 
-/* eslint-disable @typescript-eslint/no-explicit-any */
 export const getTypedToolInvocations = <TTools extends Record<string, unknown>>(
-  tools: TTools,
+  _: TTools,
   toolInvocation: ToolInvocation,
 ) => {
   type ExecuteArgs<T> = T extends {

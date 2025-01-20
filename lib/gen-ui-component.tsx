@@ -14,6 +14,7 @@ export function GenUI<
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   TTools extends Record<string, { execute: (...args: any) => any }>,
 >({
+  tools,
   toolInvocations,
   components,
 }: {
@@ -30,7 +31,7 @@ export function GenUI<
     <div>
       {toolInvocations.map((toolInvocation) => {
         const typedToolInvocation =
-          getTypedToolInvocations<TTools>(toolInvocation);
+          getTypedToolInvocations(tools, toolInvocation);
 
         const { toolName, toolCallId, state } = typedToolInvocation;
 
