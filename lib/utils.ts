@@ -1,8 +1,8 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
-import { ToolInvocation } from "ai";
+import { ToolInvocation, ToolSet } from "ai";
 
-export const getTypedToolInvocations = <TTools extends Record<string, unknown>>(
+export const getTypedToolInvocations = <TTools extends ToolSet>(
   _: TTools,
   toolInvocation: ToolInvocation,
 ) => {

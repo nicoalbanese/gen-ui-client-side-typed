@@ -1,6 +1,6 @@
 "use client";
 
-import { useChat } from "ai/react";
+import { useChat } from "@ai-sdk/react";
 import { Weather } from "@/components/weather";
 import { tools } from "@/ai/tools";
 import { getTypedToolInvocations } from "@/lib/utils";
@@ -14,38 +14,32 @@ export default function Page() {
       {messages.map((message) => (
         <div key={message.id}>
           <div>{message.role}</div>
-          <div>{message.content}</div>
-
           <div>
-            {message.toolInvocations?.map((toolInvocation) => {
-              const typedToolInvocation = getTypedToolInvocations(
-                tools,
-                toolInvocation,
-              );
-              const { toolName, toolCallId, state } = typedToolInvocation;
-
-              if (state === "result") {
-                if (toolName === "displayWeather") {
-                  const { result } = typedToolInvocation;
+            {message.parts?.map((part) => {
+              if (part.type === "text") {
+                return <div>{part.text}</div>;
+              }
+              if (part.type === "tool-invocation") {
+                const typedToolInvocation = getTypedToolInvocations(
+                  tools,
+                  part.toolInvocation
+                );
+                const { toolName, toolCallId, state } = typedToolInvocation;
+                if (state === "result") {
+                  if (toolName === "displayWeather") {
+                    const { result } = typedToolInvocation;
+                    return <Weather {...result} />;
+                  } else if (toolName === "getStockPrice") {
+                    const { result } = typedToolInvocation;
+                    return <Stock key={toolCallId} {...result} />;
+                  }
+                } else {
                   return (
                     <div key={toolCallId}>
-                      <Weather {...result} />
+                      <div>Calling {toolName}...</div>
                     </div>
                   );
-                } else if (toolName === "getStockPrice") {
-                  const { result } = typedToolInvocation;
-                  return <Stock key={toolCallId} {...result} />;
                 }
-              } else {
-                return (
-                  <div key={toolCallId}>
-                    {toolName === "displayWeather" ? (
-                      <div>Loading weather...</div>
-                    ) : (
-                      <div>Loading...</div>
-                    )}
-                  </div>
-                );
               }
             })}
           </div>
